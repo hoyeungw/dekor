@@ -14,10 +14,11 @@ class Point {
   get distance() { return Math.sqrt(this.x ** 2 + this.y ** 2) }
 
   @logger
-  move(dx, dy) { return this.horizontalMove(dx).verticalMove(dy) }
+  move(dx, dy) { return this.#horizontalMove(dx).#verticalMove(dy) }
 
-  horizontalMove(delta) { return this.x += delta, this }
-  verticalMove(delta) { return this.y += delta, this }
+  #horizontalMove(delta) { return this.x += delta, this }
+
+  #verticalMove(delta) { return this.y += delta, this }
 
   @logger
   foo(anything) { return deco(anything) }
