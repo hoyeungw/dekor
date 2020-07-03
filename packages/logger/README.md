@@ -31,11 +31,22 @@
 $ npm install @dekor/logger
 ```
 
-#### Usage
+#### Logger vs LoggerLegacy
+For those who use [@babel/plugin-proposal-decorators](https://babeljs.io/docs/en/babel-plugin-proposal-decorators):
+
+- If the decorated class contains [private methods](https://github.com/tc39/proposal-private-methods) (marked by '#'),
+use LoggerLegacy, set the plugin: [ '@babel/plugin-proposal-decorators', { legacy: true } ].
+because the @babel/plugin-proposal-decorators plugin under 7.10.4 version hasn't supported private fields yet.
+- Otherwise, use Logger, set the plugin: [ '@babel/plugin-proposal-decorators', { legacy: false } ].
+
+#### Usage - stage 2 mode
 ```js
 import { Logger } from '@dekor/logger'
+// if the class contains private field
+// import { LoggerLegacy } from '@dekor/logger'
 
 const logger = Logger('decorator:logger')
+
 
 class Point {
   constructor(x, y) { this.x = x; this.y = y }
@@ -50,7 +61,6 @@ p.distance |> console.log
 // console outputs:
 // > [decorator:logOnCall] 18:29:49.008 calling property Point.distance
 // > 10
-
 ```
 
 #### Meta

@@ -1,8 +1,8 @@
 import { ObjectCollection } from '@foba/object-string'
 import { deco, delogger }   from '@spare/deco'
-import { Logger }           from '../src/logger'
+import { Logger }           from '..'
 
-const log = Logger('decorator:logOnCall')
+const logger = Logger({ caller: 'decorator:logger', showArgs: true, showReturn: true })
 
 class Point {
   constructor(x, y) {
@@ -10,19 +10,17 @@ class Point {
     this.y = y
   }
 
-  @log
+  @logger
   get distance() { return Math.sqrt(this.x ** 2 + this.y ** 2) }
 
-  @log
-  move(dx, dy) { return this.horizontalMove(dx).verticalMove(dy) }
+  @logger
+  move(dx, dy) { return this.#horizontalMove(dx).#verticalMove(dy) }
 
-  @log
-  horizontalMove(delta) { return this.x += delta, this }
+  #horizontalMove(delta) { return this.x += delta, this }
 
-  @log
-  verticalMove(delta) { return this.y += delta, this }
+  #verticalMove(delta) { return this.y += delta, this }
 
-  @log
+  @logger
   foo(anything) { return deco(anything) }
 
   toString() { return `(${ this.x }, ${ this.y })`}

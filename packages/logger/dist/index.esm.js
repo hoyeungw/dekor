@@ -1,20 +1,28 @@
-import { Palett } from '@palett/cards';
-import { HexDye } from '@palett/dye';
 import { ros, says } from '@palett/says';
 import { deco } from '@spare/deco';
+import { OBJ, STR } from '@typen/enum-data-types';
+import { time } from '@valjoux/timestamp-pretty';
+import { Palett } from '@palett/cards';
+import { HexDye } from '@palett/dye';
+import { init } from '@vect/object-init';
 import { Deco } from '@spare/deco-vector';
 import { NONE } from '@spare/enum-brackets';
 import { SP } from '@spare/enum-chars';
-import { OBJ, STR } from '@typen/enum-data-types';
-import { time } from '@valjoux/timestamp-pretty';
-import { init } from '@vect/object-init';
 
 var _CALLING, _METHOD, _PROPERTY;
-const LOGGER = 'logger';
+const LOGGER = 'logger',
+      CALLING = 'calling',
+      VALUE = 'value',
+      GET = 'get',
+      METHOD = 'method',
+      PROPERTY = 'property';
+const Colored = init([[CALLING, (_CALLING = CALLING, HexDye(Palett.grey.accent_3)(_CALLING))], [METHOD, (_METHOD = METHOD, HexDye(Palett.cyan.lighten_2)(_METHOD))], [PROPERTY, (_PROPERTY = PROPERTY, HexDye(Palett.purple.lighten_3)(_PROPERTY))]]);
+
 const decoArgs = Deco({
   bracket: NONE,
   delim: SP
 });
+
 /**
  *
  * @param {string|Object} [p]
@@ -37,12 +45,6 @@ const Logger = p => {
 
   return logger.bind(p);
 };
-const CALLING = 'calling',
-      VALUE = 'value',
-      GET = 'get',
-      METHOD = 'method',
-      PROPERTY = 'property';
-const Pd = init([[CALLING, (_CALLING = CALLING, HexDye(Palett.grey.accent_3)(_CALLING))], [METHOD, (_METHOD = METHOD, HexDye(Palett.cyan.lighten_2)(_METHOD))], [PROPERTY, (_PROPERTY = PROPERTY, HexDye(Palett.purple.lighten_3)(_PROPERTY))]]);
 function logger(context) {
   // ({ ...context }) |> delogger
   const config = this;
@@ -61,7 +63,6 @@ function logger(context) {
 
   return context;
 }
-
 function injectLogger(kind, key, callable) {
   const {
     caller,
@@ -75,7 +76,7 @@ function injectLogger(kind, key, callable) {
           className = instance === null || instance === void 0 ? void 0 : (_instance$constructor = instance.constructor) === null || _instance$constructor === void 0 ? void 0 : _instance$constructor.name,
           callee = className ? ros(className) + '.' + ros(key) : ros(key),
           result = callable.apply(instance, arguments);
-    let info = Pd[CALLING] + ' ' + Pd[kind] + ' ' + callee;
+    let info = Colored[CALLING] + ' ' + Colored[kind] + ' ' + callee;
     if (kind === METHOD) info += '(' + (showArgs ? decoArgs(Array.from(arguments)) : '') + ')';
     if (showReturn) info += ' = ' + deco(result);
     _info = info, says[caller !== null && caller !== void 0 ? caller : LOGGER].p(time())(_info);
