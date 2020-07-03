@@ -34,7 +34,9 @@ const decoArgs = Deco({
 
 const Logger = p => {
   if (typeof p === OBJ) {
-    if (!p.caller) p.caller = LOGGER;
+    var _p$caller;
+
+    p.caller = (_p$caller = p.caller) !== null && _p$caller !== void 0 ? _p$caller : LOGGER;
   } else {
     p = {
       caller: typeof p === STR ? p : String(p),
@@ -44,6 +46,21 @@ const Logger = p => {
   }
 
   return logger.bind(p);
+};
+const LoggerLegacy = p => {
+  if (typeof p === OBJ) {
+    var _p$caller2;
+
+    p.caller = (_p$caller2 = p.caller) !== null && _p$caller2 !== void 0 ? _p$caller2 : LOGGER;
+  } else {
+    p = {
+      caller: typeof p === STR ? p : String(p),
+      outcome: false,
+      showArgs: false
+    };
+  }
+
+  return loggerLegacy.bind(p);
 };
 function logger(context) {
   // ({ ...context }) |> delogger
@@ -62,6 +79,19 @@ function logger(context) {
   }
 
   return context;
+}
+function loggerLegacy(target, key, descriptor) {
+  const config = this;
+
+  if (VALUE in descriptor) {
+    descriptor.value = injectLogger.call(config, METHOD, key, descriptor.value);
+  }
+
+  if (GET in descriptor) {
+    descriptor.get = injectLogger.call(config, PROPERTY, key, descriptor.get);
+  }
+
+  return descriptor;
 }
 function injectLogger(kind, key, callable) {
   const {
@@ -84,4 +114,4 @@ function injectLogger(kind, key, callable) {
   };
 }
 
-export { Logger };
+export { Logger, LoggerLegacy, logger, loggerLegacy };

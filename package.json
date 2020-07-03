@@ -39,17 +39,17 @@
     "@rollup/plugin-commonjs": "^13.0.0",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^8.0.1",
-    "@spare/deco": "^0.7.15",
-    "@spare/deco-func": "^0.7.15",
-    "@spare/logger": "^0.7.15",
-    "@spare/tap": "^0.7.15",
-    "@spare/xr": "^0.7.15",
+    "@spare/deco": "^0.7.16",
+    "@spare/deco-func": "^0.7.16",
+    "@spare/logger": "^0.7.16",
+    "@spare/tap": "^0.7.16",
+    "@spare/xr": "^0.7.16",
     "@typen/num-strict": "^0.1.5",
     "@valjoux/strategies": "^0.1.5",
     "lerna": "^3.20.2",
     "rollup": "^2.18.1",
     "rollup-plugin-babel": "^4.4.0",
-    "rollup-plugin-fileinfo": "^0.1.6",
+    "rollup-plugin-fileinfo": "^0.1.8",
     "rollup-plugin-terser": "^6.1.0"
   }
 }
