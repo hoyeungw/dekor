@@ -1,6 +1,6 @@
 {
   "name": "@dekor/logger",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "a decorator that logs when class method or get property is called",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
